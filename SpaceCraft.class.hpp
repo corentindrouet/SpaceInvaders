@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 11:37:45 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 11:50:47 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 15:30:02 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@
 class SpaceCraft {
 
 	public:
-		SpaceCraft( void );
 		SpaceCraft( SpaceCraft const & copy );
-		SpaceCraft( char c );
+		SpaceCraft( char c, int x, int y );
 		~SpaceCraft( void );
 		SpaceCraft	&operator=( SpaceCraft const & otherSpaceCraft );
-		int			getPosX( void );
-		int			getPosY( void );
-		int			getType( void );
+		bool		operator==( SpaceCraft const & otherSpaceCraft );
+		int			getPosX( void ) const;
+		int			getPosY( void ) const;
+		char		getType( void ) const;
 
 	protected:
-		int		posX;
-		int		posY;
-		char	type;
+		SpaceCraft( void );
+		int		_posX;
+		int		_posY;
+		char	_type;
 };
 
 #endif

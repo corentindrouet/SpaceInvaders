@@ -6,12 +6,14 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 11:37:39 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 16:06:12 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ncurse.class.hpp"
 #include <stdio.h>
+#include <stdlib.h>
+#include "PlayerSpaceCraft.hpp"
 
 int	main( void ) {
 	Ncurse	newWin;
@@ -21,25 +23,51 @@ int	main( void ) {
 			(newWin.getNbColumns() * 20) / 100, 0,
 			(newWin.getNbColumns() * 80) / 100);
 	int		keyValue = 0;
+	PlayerShip	player('>',
+			(newWin.getNbColumns() * 4) / 100,
+			newWin.getNbRows() / 2,
+			newWin.getNbRows());
+	char	str[2];
+	int		i;
 
+	str[1] = '\0';
 	Ncurse::init_colors(1, COLOR_BLUE, COLOR_WHITE);
 	Ncurse::init_colors(2, COLOR_RED, COLOR_WHITE);
 	Ncurse::init_colors(3, COLOR_YELLOW, COLOR_BLACK);
-	game.print((char*)"Hello World", 10, 5);
-	info.print((char*)"Here are informations", 5, 5);
 	game.useColor(2);
 	info.useColor(3);
 	game.refresh();
 	info.refresh();
 	while (true) {
-//		game.erase();
-//		info.erase();
 		keyValue = game.waitForInput();
 		if (keyValue == KEY_ESC) {
 			break;
+		} else if (keyValue == KEY_UP) {
+			player++;
+		} else if (keyValue == KEY_DOWN) {
+			player--;
+		} else if (keyValue == KEY_SPACE) {
+			player.shoot();
+		}
+		game.clear();
+		info.clear();
+		i = 0;
+		while (i < player.getNbrShoots()) {
+			player.getSpecificShoot(i)++;
+			i++;
+		}
+		str[0] = player.getType();
+		game.print(str, player.getPosY(), player.getPosX());
+		i = 0;
+		while (i < player.getNbrShoots()) {
+			str[0] = player.getSpecificShoot(i).getType();
+			game.print(str, player.getSpecificShoot(i).getPosY(),
+					player.getSpecificShoot(i).getPosX());
+			i++;
 		}
 		game.refresh();
 		info.refresh();
+		napms(100);
 	}
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 08:49:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 11:34:01 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 15:32:57 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <iostream>
 # include <ncurses.h>
 # define KEY_ESC 27
+# define KEY_SPACE 32
 
 class Ncurse {
 
@@ -29,7 +30,7 @@ class Ncurse {
 		int		getFirstRow( void ) const;
 		int		getFirstColumn( void ) const;
 		void	print( char *c, int y, int x );
-		void	erase( void );
+		void	clear( void );
 		void	refresh( void );
 		void	resize( int rows, int columns );
 		int		waitForInput( void );

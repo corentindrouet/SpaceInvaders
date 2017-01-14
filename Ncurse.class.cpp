@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 08:59:17 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 11:35:17 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 15:45:39 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ Ncurse::Ncurse( void ) {
 	initscr();
 	start_color();
 	cbreak();
-	clear();
 	noecho();
-	timeout(50);
+	curs_set(0);
+	timeout(500);
 	this->_win = newwin(0, 0, 0, 0);
 	keypad(this->_win, TRUE);
 	getmaxyx(this->_win, this->_nbRows, this->_nbColumns);
@@ -34,8 +34,11 @@ Ncurse::Ncurse( Ncurse const & copy ) {
 
 Ncurse::Ncurse( int rows, int columns, int firstRow, int firstColumn ) {
 	initscr();
+	cbreak();
+	timeout(500);
 	start_color();
 	this->_win = newwin(rows, columns, firstRow, firstColumn);
+	nodelay(this->_win, true);
 	keypad(this->_win, TRUE);
 	this->_nbColumns = columns;
 	this->_nbRows = rows;
@@ -82,7 +85,7 @@ void	Ncurse::print( char *c , int y, int x) {
 	return;
 }
 
-void	Ncurse::erase( void ) {
+void	Ncurse::clear( void ) {
 	werase(this->_win);
 	return;
 }
