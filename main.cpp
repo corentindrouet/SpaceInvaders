@@ -6,14 +6,14 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 16:06:12 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 16:15:21 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ncurse.class.hpp"
 #include <stdio.h>
 #include <stdlib.h>
-#include "PlayerSpaceCraft.hpp"
+#include "PlayerShip.class.hpp"
 
 int	main( void ) {
 	Ncurse	newWin;
@@ -59,11 +59,13 @@ int	main( void ) {
 		str[0] = player.getType();
 		game.print(str, player.getPosY(), player.getPosX());
 		i = 0;
-		while (i < player.getNbrShoots()) {
+		if (player.getNbrShoots()) {
 			str[0] = player.getSpecificShoot(i).getType();
-			game.print(str, player.getSpecificShoot(i).getPosY(),
-					player.getSpecificShoot(i).getPosX());
-			i++;
+			while (i < player.getNbrShoots()) {
+				game.print(str, player.getSpecificShoot(i).getPosY(),
+						player.getSpecificShoot(i).getPosX());
+				i++;
+			}
 		}
 		game.refresh();
 		info.refresh();

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 11:37:45 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 15:30:02 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 16:18:10 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ class SpaceCraft {
 
 	protected:
 		SpaceCraft( void );
+		char	_type;
 		int		_posX;
 		int		_posY;
-		char	_type;
 };
 
 #endif

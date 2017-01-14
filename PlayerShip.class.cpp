@@ -6,11 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:30:12 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 16:06:12 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 16:15:47 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "PlayerSpaceCraft.hpp"
+#include "PlayerShip.class.hpp"
 
 PlayerShip::PlayerShip( void ) : SpaceCraft() {
 	return;
