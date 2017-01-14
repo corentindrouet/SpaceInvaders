@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:30:12 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 16:15:47 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 16:48:52 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,9 @@ PlayerShip	&PlayerShip::operator--( int ) {
 
 Shoot	&PlayerShip::getSpecificShoot( int index ) const {
 	return this->_shoots[index];
+}
+
+void		PlayerShip::setNbrShoots( int nbrShoots ) {
+	this->_nbrShoots = nbrShoots;
+	return;
 }

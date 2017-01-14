@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 16:15:21 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 17:00:07 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,18 @@
 
 int	main( void ) {
 	Ncurse	newWin;
-	Ncurse	game(newWin.getNbRows(),
-			(newWin.getNbColumns() * 80) / 100, 0, 0);
+	Ncurse	game((newWin.getNbRows() * 60) / 100,
+			(((newWin.getNbColumns() * 80) / 100) * 60) / 100,
+			(newWin.getNbRows() * 20) / 100,
+			(newWin.getNbColumns() * 20) / 100);
 	Ncurse	info(newWin.getNbRows(),
 			(newWin.getNbColumns() * 20) / 100, 0,
 			(newWin.getNbColumns() * 80) / 100);
 	int		keyValue = 0;
 	PlayerShip	player('>',
-			(newWin.getNbColumns() * 4) / 100,
-			newWin.getNbRows() / 2,
-			newWin.getNbRows());
+			(game.getNbColumns() * 4) / 100,
+			game.getNbRows() / 2,
+			game.getNbColumns());
 	char	str[2];
 	int		i;
 
@@ -42,9 +44,9 @@ int	main( void ) {
 		keyValue = game.waitForInput();
 		if (keyValue == KEY_ESC) {
 			break;
-		} else if (keyValue == KEY_UP) {
+		} else if (keyValue == KEY_UP && player.getPosY() > 0) {
 			player++;
-		} else if (keyValue == KEY_DOWN) {
+		} else if (keyValue == KEY_DOWN && player.getPosY() < (game.getNbRows() - 1)) {
 			player--;
 		} else if (keyValue == KEY_SPACE) {
 			player.shoot();
@@ -52,8 +54,7 @@ int	main( void ) {
 		game.clear();
 		info.clear();
 		i = 0;
-		while (i < player.getNbrShoots()) {
-			player.getSpecificShoot(i)++;
+		while (i < player.getNbrMaxShoots()) {
 			i++;
 		}
 		str[0] = player.getType();
@@ -61,9 +62,16 @@ int	main( void ) {
 		i = 0;
 		if (player.getNbrShoots()) {
 			str[0] = player.getSpecificShoot(i).getType();
-			while (i < player.getNbrShoots()) {
-				game.print(str, player.getSpecificShoot(i).getPosY(),
-						player.getSpecificShoot(i).getPosX());
+			while (i < player.getNbrMaxShoots()) {
+				if (player.getSpecificShoot(i).getFired()) {
+					game.print(str, player.getSpecificShoot(i).getPosY(),
+							player.getSpecificShoot(i).getPosX());
+					player.getSpecificShoot(i)++;
+					if (player.getSpecificShoot(i).getPosX() >= (game.getNbColumns() - 1)) {
+						player.getSpecificShoot(i).setFired(false);
+						player.setNbrShoots(player.getNbrShoots() - 1);
+					}
+				}
 				i++;
 			}
 		}
