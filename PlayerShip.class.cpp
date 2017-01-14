@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:30:12 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 16:48:52 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 17:35:10 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ SpaceCraft(c, posX, posY) {
 	this->_nbrShoots = 0;
 	this->_nbrMaxShoots = nbrMaxShoot;
 	this->_shoots = new Shoot[nbrMaxShoot];
+	this->_score = 0;
+	this->_lives = 3;
 	return;
 }
 
@@ -95,5 +97,23 @@ Shoot	&PlayerShip::getSpecificShoot( int index ) const {
 
 void		PlayerShip::setNbrShoots( int nbrShoots ) {
 	this->_nbrShoots = nbrShoots;
+	return;
+}
+
+int			PlayerShip::getScore( void ) const {
+	return this->_score;
+}
+
+int			PlayerShip::getLives( void ) const {
+	return this->_lives;
+}
+
+void		PlayerShip::setScore( int newScore ) {
+	this->_score = newScore;
+	return;
+}
+
+void		PlayerShip::setLives( int newLive ) {
+	this->_lives = newLive;
 	return;
 }

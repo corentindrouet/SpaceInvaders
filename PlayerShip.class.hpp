@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 12:48:42 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 16:48:14 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 17:35:07 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ class PlayerShip : public SpaceCraft {
 		PlayerShip	&operator++( int );
 		PlayerShip	&operator--( int );
 		Shoot		&getSpecificShoot( int index ) const;
+		int			getScore( void ) const;
+		int			getLives( void ) const;
+		void		setScore( int newScore );
+		void		setLives( int newLive );
 
 	private:
 		Shoot	*_shoots;
 		int		_nbrShoots;
 		int		_nbrMaxShoots;
+		int		_score;
+		int		_lives;
 };
 
 #endif

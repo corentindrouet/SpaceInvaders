@@ -6,13 +6,14 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 17:00:07 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 17:35:29 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ncurse.class.hpp"
 #include <stdio.h>
-#include <stdlib.h>
+#include <string>
+//#include <stdlib.h>
 #include "PlayerShip.class.hpp"
 
 int	main( void ) {
@@ -53,10 +54,6 @@ int	main( void ) {
 		}
 		game.clear();
 		info.clear();
-		i = 0;
-		while (i < player.getNbrMaxShoots()) {
-			i++;
-		}
 		str[0] = player.getType();
 		game.print(str, player.getPosY(), player.getPosX());
 		i = 0;
@@ -75,6 +72,10 @@ int	main( void ) {
 				i++;
 			}
 		}
+		info.print((char*)"Score: ", 20, 0);
+		info.print((char *)(std::to_string(player.getScore()).c_str()), 20, 8);
+		info.print((char*)"Lives: ", 22, 0);
+		info.print((char *)(std::to_string(player.getLives()).c_str()), 22, 8);
 		game.refresh();
 		info.refresh();
 		napms(100);
