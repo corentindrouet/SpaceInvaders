@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 08:49:54 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 11:13:43 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 14:58:09 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class Ncurse {
 		void	resize( int rows, int columns );
 		int		waitForInput( void );
 		void	useColor( int colorPairNumber );
-		void	setBackgroundColor( int colorPairNumber ); 
+		void	setBackgroundColor( int colorPairNumber );
 		static void	init_colors( short num, short text, short back );
 
 	private:

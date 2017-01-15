@@ -6,16 +6,16 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 13:31:56 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 15:01:18 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ncurse.class.hpp"
 #include <stdio.h>
 #include <string>
-//#include <stdlib.h>
 #include "PlayerShip.class.hpp"
 #include "EnemyShip.class.hpp"
+#include "BigShip.class.hpp"
 
 int	main( void ) {
 	Ncurse	newWin;
@@ -43,14 +43,16 @@ int	main( void ) {
 	int		secondsDiff = 0;
 	bool	cursor = true;
 	Shoot	*backGround = new Shoot[10];
+	BigShip	*boss = new BigShip[5];
+
 
 	init_color(COLOR_CYAN, 212, 212, 212);
-	Ncurse::init_colors(5, COLOR_WHITE, COLOR_WHITE);
-	Ncurse::init_colors(0, COLOR_CYAN, COLOR_WHITE);
-	Ncurse::init_colors(1, COLOR_BLUE, COLOR_WHITE);
-	Ncurse::init_colors(2, COLOR_RED, COLOR_WHITE);
-	Ncurse::init_colors(3, COLOR_GREEN, COLOR_WHITE);
-	Ncurse::init_colors(4, COLOR_YELLOW, COLOR_WHITE);
+	Ncurse::init_colors(5, COLOR_WHITE, COLOR_BLACK);
+	Ncurse::init_colors(0, COLOR_CYAN, COLOR_BLACK);
+	Ncurse::init_colors(1, COLOR_BLUE, COLOR_BLACK);
+	Ncurse::init_colors(2, COLOR_RED, COLOR_BLACK);
+	Ncurse::init_colors(3, COLOR_GREEN, COLOR_BLACK);
+	Ncurse::init_colors(4, COLOR_YELLOW, COLOR_BLACK);
 	Ncurse::init_colors(22, COLOR_GREEN, COLOR_BLACK);
 	Ncurse::init_colors(23, COLOR_RED, COLOR_BLACK);
 	Ncurse::init_colors(24, COLOR_WHITE, COLOR_BLACK);
@@ -140,10 +142,10 @@ int	main( void ) {
 					}
 				}
 				cptenemy = 0;
-				game.useColor(23);
 				while (cptenemy < nb_enemy)
 				{
 					EnemyShip &enem = enemy[cptenemy];
+					game.useColor(enem.getColor());
 					if (enem.activated ())
 					{
 						int	shoots = 0;
@@ -182,6 +184,38 @@ int	main( void ) {
 						}
 					}
 					cptenemy++;
+				}
+//				if (((j - 3)% 100) == 0) {
+					i = 0;
+					while (i < 5) {
+						if (!boss[i].activated()) {
+							boss[i].activate(game.getNbColumns() - 1, game.getNbRows());
+							break;
+						}
+						i++;
+					}
+//				}
+				i = 0;
+				while (i < 5) {
+					game.print((char*)"bonjour", 0, 0);
+					if (boss[i].activated()) {
+						if (boss[i] == player) {
+							boss[i].deactivate();
+							player.setLives(0);
+						} else if (boss[i].getPosX() < -5)
+							boss[i].deactivate();
+						else {
+							game.print(boss[i].getPatern()[0], boss[i].getPosY(), boss[i].getPosX());
+							game.print(boss[i].getPatern()[1], boss[i].getPosY() + 1, boss[i].getPosX());
+							game.print(boss[i].getPatern()[2], boss[i].getPosY() + 2, boss[i].getPosX());
+							game.print(boss[i].getPatern()[3], boss[i].getPosY() + 3, boss[i].getPosX());
+							game.print(boss[i].getPatern()[4], boss[i].getPosY() + 4, boss[i].getPosX());
+						}
+//						if ((j % 5) == 0) {
+							boss[i]--;
+//						}
+					}
+					i++;
 				}
 				i = 0;
 				game.useColor(22);
