@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 08:59:17 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 15:45:39 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 11:15:03 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ Ncurse::Ncurse( void ) {
 	curs_set(0);
 	timeout(500);
 	this->_win = newwin(0, 0, 0, 0);
+//	nodelay(this->_win, true);
 	keypad(this->_win, TRUE);
 	getmaxyx(this->_win, this->_nbRows, this->_nbColumns);
 	this->_firstRow = 0;
@@ -111,7 +112,7 @@ int		Ncurse::waitForInput( void ) {
 
 
 void	Ncurse::useColor( int colorPairNumber ) {
-	attrset(COLOR_PAIR(colorPairNumber));
+	wattron(this->_win, COLOR_PAIR(colorPairNumber));
 	return;
 }
 

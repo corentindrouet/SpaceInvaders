@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 14:28:40 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 15:39:46 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 11:49:06 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ Shoot	&Shoot::operator=( Shoot const & otherShoot ) {
 	this->_posY = otherShoot.getPosY();
 	this->_type = otherShoot.getType();
 	return *this;
+}
+
+bool	Shoot::operator>=( SpaceCraft const & ship ) {
+	return (this->_posX >= ship.getPosX() &&
+			this->_posY == ship.getPosY());
 }
 
 bool	Shoot::operator==( SpaceCraft const & ship ) {
@@ -71,5 +76,10 @@ void	Shoot::setPosY( int pos ) {
 
 Shoot	&Shoot::operator++( int ) {
 	this->_posX++;
+	return *this;
+}
+
+Shoot	&Shoot::operator--( int ) {
+	this->_posX--;
 	return *this;
 }

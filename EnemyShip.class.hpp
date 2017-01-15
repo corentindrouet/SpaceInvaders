@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 12:48:42 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 17:04:40 by jblancha         ###   ########.fr       */
+/*   Updated: 2017/01/15 08:30:43 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ class EnemyShip : public SpaceCraft {
 
 	public:
 
-		
 		EnemyShip( void );
 		EnemyShip( EnemyShip const & copy );
 		~EnemyShip( void );

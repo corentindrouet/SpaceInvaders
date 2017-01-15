@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:30:12 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 17:05:47 by jblancha         ###   ########.fr       */
+/*   Updated: 2017/01/15 11:29:38 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 EnemyShip::EnemyShip( void ) : SpaceCraft() {
 	this->_activated = false;
+	this->_nbrMaxShoots = 10;
+	this->_nbrShoots = 0;
+	this->_shoots = new Shoot[10];
 	return;
 }
 
@@ -69,7 +72,7 @@ bool	EnemyShip::activated( void ) const {
 }
 
 void	EnemyShip::activate( void ) {
-	char  en[8] = {'!', '@', '#','$','%', '^','&', '*'};
+	char  en[8] = {'<', 'C', 'X','8','3', 'H','O', '*'};
 	static bool init = false;
 
 	if (!init)
@@ -80,7 +83,7 @@ void	EnemyShip::activate( void ) {
 
 	this->_activated = true;
 	this->setColor ();
-	this->_type = en[rand() % 7];
+	this->_type = en[rand() % 8];
 	this->_posY = rand () % 39;
 	this->_posX = 100;
 }
@@ -100,7 +103,7 @@ void	EnemyShip::shoot( void ) {
 		i++;
 	}
 	this->_shoots[i].setFired(true);
-	this->_shoots[i].setPosX(this->_posX + 1);
+	this->_shoots[i].setPosX(this->_posX - 1);
 	this->_shoots[i].setPosY(this->_posY);
 	this->_nbrShoots++;
 }

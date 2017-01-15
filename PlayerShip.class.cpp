@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:30:12 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 17:35:10 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 10:46:25 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ SpaceCraft(c, posX, posY) {
 	this->_shoots = new Shoot[nbrMaxShoot];
 	this->_score = 0;
 	this->_lives = 3;
+	this->_nbBullets = 0;
 	return;
 }
 
@@ -79,6 +80,7 @@ void	PlayerShip::shoot( void ) {
 	this->_shoots[i].setPosX(this->_posX + 1);
 	this->_shoots[i].setPosY(this->_posY);
 	this->_nbrShoots++;
+	this->_nbBullets--;
 }
 
 PlayerShip	&PlayerShip::operator++( int ) {
@@ -116,4 +118,29 @@ void		PlayerShip::setScore( int newScore ) {
 void		PlayerShip::setLives( int newLive ) {
 	this->_lives = newLive;
 	return;
+}
+
+int			PlayerShip::getNbBullets( void ) const {
+	return this->_nbBullets;
+}
+
+void		PlayerShip::setNbBullets( int nb ) {
+	this->_nbBullets = nb;
+	return;
+}
+
+void		PlayerShip::reset( int posX, int posY ) {
+	int		i;
+
+	i = 0;
+	this->_posX = posX;
+	this->_posY = posY;
+	this->_nbrShoots = 0;
+	this->_score = 0;
+	this->_lives = 3;
+	this->_nbBullets = 0;
+	while (i < this->_nbrMaxShoots) {
+		this->_shoots[i].setFired(false);
+		i++;
+	}
 }

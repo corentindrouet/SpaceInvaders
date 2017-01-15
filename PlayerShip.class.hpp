@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 12:48:42 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 17:35:07 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 10:46:41 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ class PlayerShip : public SpaceCraft {
 		int			getLives( void ) const;
 		void		setScore( int newScore );
 		void		setLives( int newLive );
+		int			getNbBullets( void ) const;
+		void		setNbBullets( int nb );
+		void		reset( int posX, int posY );
 
 	private:
 		Shoot	*_shoots;
@@ -41,6 +44,7 @@ class PlayerShip : public SpaceCraft {
 		int		_nbrMaxShoots;
 		int		_score;
 		int		_lives;
+		int		_nbBullets;
 };
 
 #endif

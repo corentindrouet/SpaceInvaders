@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:14:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 15:39:38 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 11:52:23 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ class Shoot {
 		Shoot( Shoot const & copy );
 		~Shoot( void );
 		Shoot	&operator=( Shoot const & otherShoot );
+		bool	operator>=( SpaceCraft const & ship );
 		bool	operator==( SpaceCraft const & ship );
 		int		getFired( void ) const;
 		int		getPosX( void ) const;
@@ -30,6 +31,7 @@ class Shoot {
 		void	setPosX( int pos );
 		void	setPosY( int pos );
 		Shoot	&operator++( int );
+		Shoot	&operator--( int );
 
 	private:
 		int		_fired;
