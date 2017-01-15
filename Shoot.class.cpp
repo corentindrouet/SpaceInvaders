@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 14:28:40 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 11:49:06 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 13:06:05 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ void	Shoot::setPosX( int pos ) {
 
 void	Shoot::setPosY( int pos ) {
 	this->_posY = pos;
+	return;
+}
+
+void	Shoot::setType( char c ) {
+	this->_type = c;
 	return;
 }
 

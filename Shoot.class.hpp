@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:14:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 11:52:23 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 13:05:38 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Shoot {
 		void	setFired( int fire );
 		void	setPosX( int pos );
 		void	setPosY( int pos );
+		void	setType( char c );
 		Shoot	&operator++( int );
 		Shoot	&operator--( int );
 

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 11:51:02 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 13:31:56 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int	main( void ) {
 	std::time_t	start = std::time(NULL);
 	int		secondsDiff = 0;
 	bool	cursor = true;
+	Shoot	*backGround = new Shoot[10];
 
+	init_color(COLOR_CYAN, 212, 212, 212);
 	Ncurse::init_colors(5, COLOR_WHITE, COLOR_WHITE);
 	Ncurse::init_colors(0, COLOR_CYAN, COLOR_WHITE);
 	Ncurse::init_colors(1, COLOR_BLUE, COLOR_WHITE);
@@ -52,6 +54,7 @@ int	main( void ) {
 	Ncurse::init_colors(22, COLOR_GREEN, COLOR_BLACK);
 	Ncurse::init_colors(23, COLOR_RED, COLOR_BLACK);
 	Ncurse::init_colors(24, COLOR_WHITE, COLOR_BLACK);
+	Ncurse::init_colors(25, COLOR_CYAN, COLOR_BLACK);
 	Ncurse::init_colors(33, COLOR_YELLOW, COLOR_BLACK);
 	while (true) {
 		newWin.setBackgroundColor(24);
@@ -93,6 +96,31 @@ int	main( void ) {
 				}
 				game.clear();
 				info.clear();
+				game.useColor(25);
+				if (((j - 3) % 30) == 0) {
+					i = 0;
+					while (i < 10) {
+						if (!backGround[i].getFired()) {
+							backGround[i].setFired(true);
+							backGround[i].setPosX(game.getNbColumns() - 1);
+							backGround[i].setPosY(std::rand() % game.getNbRows());
+							backGround[i].setType('0');
+							break;
+						}
+						i++;
+					}
+				}
+				i = 0;
+				while (i < 10) {
+					if (backGround[i].getFired() && backGround[i].getPosX() <= 0)
+						backGround[i].setFired(false);
+					if (backGround[i].getFired()){
+						str[0] = backGround[i].getType();
+						game.print(str, backGround[i].getPosY(), backGround[i].getPosX());
+						backGround[i]--;
+					}
+					i++;
+				}
 				str[0] = player.getType();
 				game.useColor(24);
 				game.print(str, player.getPosY(), player.getPosX());
@@ -105,7 +133,7 @@ int	main( void ) {
 						EnemyShip &enem = enemy[cptenemy];
 						if (!enem.activated ())
 						{
-							enem.activate ();
+							enem.activate (game.getNbColumns() - 1, game.getNbRows());
 							break;
 						}
 						cptenemy++;
@@ -133,7 +161,7 @@ int	main( void ) {
 						}
 						if ((j % 3) == 0)
 							enem--;
-						if ((j % 10) == 0)
+						if ((std::rand() % 100) == 5)
 							enem.shoot();
 						str[0] = '-';
 						while (shoots < enem.getNbrMaxShoots()) {
@@ -142,6 +170,8 @@ int	main( void ) {
 									int nblives = player.getLives ();
 									enem.getSpecificShoot(shoots).setFired(false);
 									player.setLives(--nblives);
+								} else if (enem.getSpecificShoot(shoots).getPosX() <= 0) {
+									enem.getSpecificShoot(shoots).setFired(false);
 								} else {
 									game.print(str, enem.getSpecificShoot(shoots).getPosY(),
 											enem.getSpecificShoot(shoots).getPosX());

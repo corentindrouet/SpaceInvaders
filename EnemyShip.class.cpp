@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:30:12 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 11:29:38 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 12:56:16 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,21 @@ bool	EnemyShip::activated( void ) const {
 	return this->_activated;
 }
 
-void	EnemyShip::activate( void ) {
+void	EnemyShip::activate( int posX, int posYmax ) {
 	char  en[8] = {'<', 'C', 'X','8','3', 'H','O', '*'};
 	static bool init = false;
 
 	if (!init)
 	{
-		srand ((unsigned int) time(NULL));
+		std::srand ((unsigned int) time(NULL));
 		init = true;
 	}
 
 	this->_activated = true;
 	this->setColor ();
-	this->_type = en[rand() % 8];
-	this->_posY = rand () % 39;
-	this->_posX = 100;
+	this->_type = en[std::rand() % 8];
+	this->_posY = std::rand () % posYmax;
+	this->_posX = posX;
 }
 
 void	EnemyShip::deactivate( void ) {
