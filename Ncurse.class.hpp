@@ -35,6 +35,7 @@ class Ncurse {
 		void	resize( int rows, int columns );
 		int		waitForInput( void );
 		void	useColor( int colorPairNumber );
+		void	setBackgroundColor( int colorPairNumber ); 
 		static void	init_colors( short num, short text, short back );
 
 	private:

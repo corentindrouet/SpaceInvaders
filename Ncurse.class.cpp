@@ -111,6 +111,11 @@ int		Ncurse::waitForInput( void ) {
 
 
 void	Ncurse::useColor( int colorPairNumber ) {
+	attrset(COLOR_PAIR(colorPairNumber));
+	return;
+}
+
+void	Ncurse::setBackgroundColor( int colorPairNumber ) {
 	wbkgd(this->_win, COLOR_PAIR(colorPairNumber));
 	return;
 }

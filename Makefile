@@ -6,7 +6,7 @@
 #    By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 09:04:35 by cdrouet           #+#    #+#              #
-#    Updated: 2017/01/14 16:17:20 by cdrouet          ###   ########.fr        #
+#    Updated: 2017/01/14 17:44:19 by jblancha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = ft_retro
 SRC = main.cpp \
 	  Ncurse.class.cpp \
 	  PlayerShip.class.cpp \
+	  EnemyShip.class.cpp \
 	  Shoot.class.cpp \
 	  SpaceCraft.class.cpp \
 

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/14 17:35:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/14 18:56:03 by jblancha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string>
 //#include <stdlib.h>
 #include "PlayerShip.class.hpp"
+#include "EnemyShip.class.hpp"
 
 int	main( void ) {
 	Ncurse	newWin;
@@ -32,13 +33,21 @@ int	main( void ) {
 			game.getNbColumns());
 	char	str[2];
 	int		i;
+	int		cptenemy;
+	int		nb_enemy = 30;
+	EnemyShip		*enemy;
 
+	enemy = new EnemyShip[nb_enemy];
 	str[1] = '\0';
+	Ncurse::init_colors(0, COLOR_CYAN, COLOR_WHITE);
 	Ncurse::init_colors(1, COLOR_BLUE, COLOR_WHITE);
 	Ncurse::init_colors(2, COLOR_RED, COLOR_WHITE);
-	Ncurse::init_colors(3, COLOR_YELLOW, COLOR_BLACK);
-	game.useColor(2);
-	info.useColor(3);
+	Ncurse::init_colors(3, COLOR_GREEN, COLOR_WHITE);
+	Ncurse::init_colors(4, COLOR_YELLOW, COLOR_WHITE);
+	Ncurse::init_colors(22, COLOR_RED, COLOR_CYAN);
+	Ncurse::init_colors(33, COLOR_YELLOW, COLOR_BLACK);
+	game.setBackgroundColor(22);
+	info.setBackgroundColor(33);
 	game.refresh();
 	info.refresh();
 	while (true) {
@@ -55,14 +64,70 @@ int	main( void ) {
 		game.clear();
 		info.clear();
 		str[0] = player.getType();
+		game.useColor(3);
 		game.print(str, player.getPosY(), player.getPosX());
+		cptenemy = 0;
+		while (cptenemy < nb_enemy)
+		{
+			EnemyShip &enem = enemy[cptenemy];
+			if (!enem.activated ())
+			{
+				enem.activate ();
+				break;
+			}
+			cptenemy++;
+		}
+		cptenemy = 0;
+		while (cptenemy < nb_enemy)
+		{
+			EnemyShip &enem = enemy[cptenemy];
+			if (enem.activated ())
+			{
+				if (player == enem)
+				{
+					int nblives = player.getLives ();
+					enem.deactivate ();
+					player.setLives(--nblives);
+				}
+				else if (enem.getPosX () <= 0)
+					enem.deactivate ();
+				else
+				{
+					enem--;
+					str[0] = enem.getType();
+					game.useColor(enem.getColor());
+					game.print(str, enem.getPosY(), enem.getPosX());
+				}
+					
+			}
+			cptenemy++;
+		}
 		i = 0;
 		if (player.getNbrShoots()) {
 			str[0] = player.getSpecificShoot(i).getType();
 			while (i < player.getNbrMaxShoots()) {
 				if (player.getSpecificShoot(i).getFired()) {
-					game.print(str, player.getSpecificShoot(i).getPosY(),
-							player.getSpecificShoot(i).getPosX());
+					cptenemy = 0;
+					while (cptenemy < nb_enemy)
+					{
+						EnemyShip &enem = enemy[cptenemy];
+						if ((enem.activated ()) && (player.getSpecificShoot(i) == enem))
+						{
+							player.getSpecificShoot(i).setFired(false);
+							enem.deactivate ();
+							int score = player.getScore	();
+							player.setScore	(++score);
+							player.setNbrShoots(player.getNbrShoots() - 1);
+						}
+							
+						cptenemy++;
+					}
+					if (player.getSpecificShoot(i).getFired())
+					{
+							
+							game.print(str, player.getSpecificShoot(i).getPosY(),
+								player.getSpecificShoot(i).getPosX());
+					}
 					player.getSpecificShoot(i)++;
 					if (player.getSpecificShoot(i).getPosX() >= (game.getNbColumns() - 1)) {
 						player.getSpecificShoot(i).setFired(false);
@@ -79,6 +144,8 @@ int	main( void ) {
 		game.refresh();
 		info.refresh();
 		napms(100);
+		if (player.getLives () == 0)
+			break;
 	}
 	return 0;
 }
