@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 13:44:07 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 14:48:57 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 16:06:10 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,19 @@ class BigShip : public EnemyShip {
 		char	**getPatern( void ) const;
 		bool	operator==( Shoot const & shoot );
 		bool	operator==( SpaceCraft const & ship );
+		void		prepareShoot( void );
 		void		shoot( void );
 		void		activate( int posX, int posYmax );
 		Shoot		&getSpecificShoot( void ) const;
 		void		setLives( int lives );
+		int 		getLives( void );
+		bool		getPrepareShoot( void );
 
 	private:
-		char	_patern[5][7];
+		char	**_patern;
 		char	_lives;
 		Shoot	_shoots;
-		bool	_activated;
+		bool	_prepareShoot;
 
 };
 

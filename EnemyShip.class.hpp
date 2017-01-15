@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 12:48:42 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 13:02:01 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 16:19:57 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ class EnemyShip : public SpaceCraft {
 		EnemyShip	&operator--( int );
 		Shoot		&getSpecificShoot( int index ) const;
 
+	protected:
+		bool	_activated;
+		int		_nbrShoots;
+
 	private:
 		Shoot	*_shoots;
-		int		_nbrShoots;
 		int		_nbrMaxShoots;
-		bool	_activated;
 		int     _color;
 };
 

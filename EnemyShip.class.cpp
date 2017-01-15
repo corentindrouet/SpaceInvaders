@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 13:30:12 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 14:08:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 15:06:29 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		EnemyShip::getColor( void ) const {
 }
 
 void	EnemyShip::setColor( void ){
-	this->_color = rand() % 3;
+	this->_color = rand() % 4;
 }
 
 bool	EnemyShip::activated( void ) const {

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 09:53:15 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/01/15 15:01:18 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/01/15 16:39:33 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@
 #include "PlayerShip.class.hpp"
 #include "EnemyShip.class.hpp"
 #include "BigShip.class.hpp"
+
+char	*strRepeat( char c, int size ) {
+	char	*str = new char[size + 1];
+	int		i = 0;
+
+	while (i < size) {
+		str[i] = c;
+		i++;
+	}
+	str[size] = '\0';
+	return str;
+}
 
 int	main( void ) {
 	Ncurse	newWin;
@@ -42,12 +54,13 @@ int	main( void ) {
 	std::time_t	start = std::time(NULL);
 	int		secondsDiff = 0;
 	bool	cursor = true;
-	Shoot	*backGround = new Shoot[10];
-	BigShip	*boss = new BigShip[5];
+	Shoot	*backGround;
+	BigShip	*boss;
+	int		actualJ[5] = {0, 0, 0, 0, 0};
 
 
 	init_color(COLOR_CYAN, 212, 212, 212);
-	Ncurse::init_colors(5, COLOR_WHITE, COLOR_BLACK);
+	Ncurse::init_colors(5, COLOR_WHITE, COLOR_WHITE);
 	Ncurse::init_colors(0, COLOR_CYAN, COLOR_BLACK);
 	Ncurse::init_colors(1, COLOR_BLUE, COLOR_BLACK);
 	Ncurse::init_colors(2, COLOR_RED, COLOR_BLACK);
@@ -72,6 +85,8 @@ int	main( void ) {
 		if (keyValue == 10 && cursor) {
 			start = std::time(NULL);
 			enemy = new EnemyShip[nb_enemy];
+			backGround = new Shoot[10];
+			boss = new BigShip[5];
 			str[1] = '\0';
 			newWin.setBackgroundColor(5);
 			game.setBackgroundColor(22);
@@ -123,9 +138,6 @@ int	main( void ) {
 					}
 					i++;
 				}
-				str[0] = player.getType();
-				game.useColor(24);
-				game.print(str, player.getPosY(), player.getPosX());
 				cptenemy = 0;
 				if (moduloPopEnnemy > 1 && (j % 100) == 0)
 					moduloPopEnnemy--;
@@ -185,19 +197,19 @@ int	main( void ) {
 					}
 					cptenemy++;
 				}
-//				if (((j - 3)% 100) == 0) {
+				if ((j % 100) == 0) {
 					i = 0;
 					while (i < 5) {
 						if (!boss[i].activated()) {
-							boss[i].activate(game.getNbColumns() - 1, game.getNbRows());
+							boss[i].activate(game.getNbColumns() - 6, game.getNbRows());
 							break;
 						}
 						i++;
 					}
-//				}
+				}
 				i = 0;
 				while (i < 5) {
-					game.print((char*)"bonjour", 0, 0);
+					game.useColor(24);
 					if (boss[i].activated()) {
 						if (boss[i] == player) {
 							boss[i].deactivate();
@@ -211,9 +223,29 @@ int	main( void ) {
 							game.print(boss[i].getPatern()[3], boss[i].getPosY() + 3, boss[i].getPosX());
 							game.print(boss[i].getPatern()[4], boss[i].getPosY() + 4, boss[i].getPosX());
 						}
-//						if ((j % 5) == 0) {
+						if ((j % 5) == 0) {
 							boss[i]--;
-//						}
+						}
+						if (!boss[i].getPrepareShoot() && (std::rand() % 100) == 5) {
+							actualJ[i] = 0;
+							boss[i].prepareShoot();
+						} else if (boss[i].getPrepareShoot())
+							actualJ[i]++;
+						if (boss[i].getPrepareShoot() && actualJ[i] < 100) {
+							char	*tmp = strRepeat('-', boss[i].getPosX());
+							game.useColor(25);
+							game.print(tmp, boss[i].getPosY() + 2, 0);
+							delete [] tmp;
+						} else if (boss[i].getPrepareShoot() && actualJ[i] >= 100 && actualJ[i] <= 150) {
+							char	*tmp = strRepeat('-', boss[i].getPosX());
+							if (actualJ[i] == 150)
+								boss[i].shoot();
+							game.print(tmp, boss[i].getPosY() + 2, 0);
+							if (player.getPosY() == (boss[i].getPosY() + 2)) {
+								player.setLives(0);
+							}
+							delete [] tmp;
+						}
 					}
 					i++;
 				}
@@ -238,6 +270,25 @@ int	main( void ) {
 								}
 								cptenemy++;
 							}
+							cptenemy = 0;
+							while (cptenemy < 5)
+							{
+								BigShip &bossI = boss[cptenemy];
+								if ((bossI.activated()) && (bossI == player.getSpecificShoot(i)))
+								{
+									player.getSpecificShoot(i).setFired(false);
+									if (bossI.getLives() == 1) {
+										int score = player.getScore	();
+										bossI.deactivate();
+										player.setScore	(score + 10);
+										player.setNbrShoots(player.getNbrShoots() - 1);
+										player.setNbBullets(player.getNbBullets() + 1);
+									} else {
+										bossI.setLives( bossI.getLives() - 1);
+									}
+								}
+								cptenemy++;
+							}
 							if (player.getSpecificShoot(i).getFired())
 							{
 								game.print(str, player.getSpecificShoot(i).getPosY(),
@@ -252,6 +303,9 @@ int	main( void ) {
 						i++;
 					}
 				}
+				str[0] = player.getType();
+				game.useColor(24);
+				game.print(str, player.getPosY(), player.getPosX());
 				info.print((char*)"Score: ", 20, 0);
 				info.print((char *)(std::to_string(player.getScore()).c_str()), 20, 8);
 				info.print((char*)"Lives: ", 22, 0);
@@ -276,6 +330,8 @@ int	main( void ) {
 			info.setBackgroundColor(5);
 			info.refresh();
 			delete [] enemy;
+			delete [] backGround;
+			delete [] boss;
 			player.reset((game.getNbColumns() * 4) / 100,
 					game.getNbRows() / 2);
 		} else if (keyValue == KEY_UP) {
