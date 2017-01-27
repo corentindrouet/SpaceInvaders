@@ -14,6 +14,7 @@
 # define BIG_SHIP_CLASS_HPP
 # include "EnemyShip.class.hpp"
 # include "Shoot.class.hpp"
+# include <cstring>
 
 class BigShip : public EnemyShip {
 

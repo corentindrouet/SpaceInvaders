@@ -11,11 +11,19 @@
 /* ************************************************************************** */
 
 #include "Ncurse.class.hpp"
-#include <stdio.h>
-#include <string>
+#include <ctime>
 #include "PlayerShip.class.hpp"
 #include "EnemyShip.class.hpp"
 #include "BigShip.class.hpp"
+#include <sstream>
+namespace std {
+	template<typename T>
+		std::string to_string(const T &n) {
+			std::ostringstream s;
+			s << n;
+			return s.str();
+		}
+}
 
 char	*strRepeat( char c, int size ) {
 	char	*str = new char[size + 1];

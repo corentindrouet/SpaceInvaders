@@ -13,6 +13,7 @@
 #ifndef ENEMY_SPACE_CRAFT_HPP
 # define ENEMY_SPACE_CRAFT_HPP
 # include "Shoot.class.hpp"
+# include <cstdlib>
 
 class EnemyShip : public SpaceCraft {
 
